@@ -86,7 +86,6 @@ form.addEventListener("submit", (event) => {
 
 const displaySeries = () => {
   const seriesNode = series.map((serie, index) => {
-
     return createSerieElement(serie, index);
   });
   ul.innerHTML = "";
@@ -96,25 +95,35 @@ const displaySeries = () => {
 
 const btnvu = document.querySelector(".btnvu");
 
-
 btnvu.addEventListener("click", () => {
   const serievu = series.filter(function (serie) {
     return serie.seen == true;
   });
 
-  console.log(serievu);
-  displaySeries(serievu);
+  ul.innerHTML = ""; // Réinitialiser le contenu de la liste
+  serievu.forEach((serie, index) => {
+    let li = createSerieElement(serie, index);
+    ul.appendChild(li);
+  });
 });
 
-// const btnavoir = document.querySelector(".btnavoir");
-// btnavoir.addEventListener("click", () => {
-//   const serieavoir = series.filter(function (serie) {
-//     return (serie.seen = false);
-//   });
+const btnavoir = document.querySelector(".btnavoir");
+btnavoir.addEventListener("click", () => {
+  const serieavoir = series.filter(function (serie) {
+    return serie.seen == false;
+  });
 
-// console.log(serieavoir);
-// displaySeries();
-// });
+  ul.innerHTML = "";
+  serieavoir.forEach((serie, index) => {
+    let li = createSerieElement(serie, index);
+    ul.appendChild(li);
+  });
+});
+
+const btntout = document.querySelector(".btntout");
+btntout.addEventListener("click", () => {
+  displaySeries();
+});
 
 // créer une méthode qui affiche un input avec le nom de la série et 2 boutons cancel et save
 
@@ -200,9 +209,6 @@ const createSerieElement = (serie, index) => {
   li.append(span, p, btnEdit, btnDelete);
   return li;
 };
-
-
-
 
 const addSerie = (value) => {
   series.push({ name: value, seen: false, modecreate: false });
